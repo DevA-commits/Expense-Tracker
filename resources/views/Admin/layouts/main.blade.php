@@ -47,14 +47,14 @@
         #preloaders:before {
             content: "";
             position: fixed;
-            top: calc(40% - 30px);
-            left: calc(50% - 30px);
+            top: calc(10% - 30px);
+            left: calc(35% - 30px);
             border: 6px solid #ffffff;
             /* border-color: #e84545 transparent #e84545 transparent; */
-            /* background-image: url('assets/images/download.gif'); */
+            background-image: url('assets/images/MyEXP-1.png');
             background-repeat: no-repeat;
-            width: 100px;
-            height: 200px;
+            width: 400px;
+            height: 400px;
         }
 
         @keyframes animate-preloaders {
