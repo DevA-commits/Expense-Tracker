@@ -47,11 +47,11 @@
         #preloaders:before {
             content: "";
             position: fixed;
-            top: calc(10% - 30px);
-            left: calc(35% - 30px);
+            top: calc(40% - 30px);
+            left: calc(47% - 20px);
             border: 6px solid #ffffff;
             /* border-color: #e84545 transparent #e84545 transparent; */
-            background-image: url('assets/images/MyEXP-1.png');
+            background-image: url('assets/images/loader.gif');
             background-repeat: no-repeat;
             width: 400px;
             height: 400px;

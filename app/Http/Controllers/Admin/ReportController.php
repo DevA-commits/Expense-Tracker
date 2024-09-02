@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Currency;
 use App\Models\Expense;
+use App\Models\ExpenseCategory;
+use App\Models\PaymentMethod;
 use App\Models\TotalAmount;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ReportController extends Controller
 {
@@ -35,6 +39,67 @@ class ReportController extends Controller
         $list = Expense::where('id', decrypt($id))->first();
         return view('Admin.pages.report.list', compact('list'));
     }
+
+    public function edit($id)
+    {
+        $expense = Expense::where('id', decrypt($id))->first();
+        $paymentMethods = PaymentMethod::all();
+        $currencies = Currency::all();
+        $expenseCategories = ExpenseCategory::all();
+
+        return view('Admin.pages.report.edit', compact('expense', 'paymentMethods', 'currencies', 'expenseCategories'));
+    }
+
+
+    public function update(Request $request)
+    {
+        $rules = [
+            'merchant_name' => ['required', 'string', 'max:100'],
+            'description' => ['required', 'string', 'max:200'],
+            'payment_method_id' => ['required', 'exists:payment_methods,id'],
+            'currency_id' => ['required', 'exists:currencies,id'],
+            'expense_category_id' => ['required', 'exists:expense_categories,id'],
+            'date_of_spend' => ['required', 'date'],
+            'amount_spent' => ['required', 'numeric', 'min:0'],
+            'attendees' => ['nullable', 'string', 'max:500'],
+        ];
+
+        $messages = [
+            // Custom error messages can be added here
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
+
+        $expense_id = decrypt($request->expense_id);
+
+        $expense = Expense::find($expense_id);
+        if (!$expense) {
+            return response()->json(['message' => 'Expense not found!'], 404);
+        }
+
+        $expense_data = [
+            'merchant_name' => $request->merchant_name,
+            'description' => $request->description,
+            'payment_method_id' => $request->payment_method_id,
+            'currency_id' => $request->currency_id,
+            'expense_category_id' => $request->expense_category_id,
+            'date_of_spend' => $request->date_of_spend,
+            'amount_spent' => $request->amount_spent,
+            'attendees' => $request->attendees,
+        ];
+
+        $update_expense = $expense->update($expense_data);
+
+        if (!$update_expense) {
+            return response()->json(['message' => 'Something went wrong!'], 500);
+        }
+
+        return response()->json(['message' => 'Expense updated successfully!'], 200);
+    }
+
 
     public function dataTable(Request $request)
     {
