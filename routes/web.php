@@ -19,6 +19,7 @@ Route::group(['prefix' => '/report', 'as' => 'admin.'], function () {
     Route::get('/', [ReportController::class, 'index'])->name('report');
     Route::post('/data-table', [ReportController::class, 'dataTable'])->name('datatable');
     Route::get('/edit/{id}', [ReportController::class, 'edit'])->name('edit');
+    Route::get('/list/{id}', [ReportController::class, 'list'])->name('list');
     Route::put('/update', [ReportController::class, 'update'])->name('update');
     Route::delete('/delete/{id}', [ReportController::class, 'delete'])->name('delete');
 });
