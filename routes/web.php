@@ -13,6 +13,7 @@ Route::group(['prefix' => '/'], function () {
 Route::group(['prefix' => '/expense', 'as' => 'admin.'], function () {
     Route::get('/', [ExpenseController::class, 'index'])->name('index');
     Route::post('/store', [ExpenseController::class, 'store'])->name('store');
+    Route::post('/data-table', [ExpenseController::class, 'dataTable'])->name('table.datatable');
 });
 
 Route::group(['prefix' => '/report', 'as' => 'admin.'], function () {

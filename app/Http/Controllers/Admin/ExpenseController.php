@@ -61,4 +61,51 @@ class ExpenseController extends Controller
             return response()->json(['message' => 'Something went wrong!'], 500);
         }
     }
+
+    public function dataTable(Request $request)
+    {
+        $ajaxData = dataTableRequests($request->all());
+
+        // Total records
+        $query = Expense::with('paymentMethod', 'currency', 'expenseCategory');
+        $totalRecords = $query->count();
+
+        // Search filter
+        if (!empty($ajaxData['searchValue'])) {
+            $query->where('name', 'like', '%' . $ajaxData['searchValue'] . '%');
+        }
+        $totalRecordswithFilter = $query->count();
+
+        $records = $query->orderBy('id', 'DESC')
+            ->skip($ajaxData['start'])
+            ->take(5)
+            ->get();
+
+        $data_arr = [];
+        $sl = 1;
+        foreach ($records as $record) {
+            $data_arr[] = [
+                "sl" => $sl,
+                "payment_method_id" => $record->paymentMethod->title,
+                "currency_id" => $record->currency->title,
+                "expense_category_id" => $record->expenseCategory->title,
+                "merchant_name" => $record->merchant_name,
+                "date_of_spend" => $record->date_of_spend,
+                "amount_spent" => $record->amount_spent,
+                "description" => $record->description,
+                "attendees" => $record->attendees
+            ];
+            $sl++;
+        }
+
+        $response = [
+            "draw" => intval($ajaxData['draw']),
+            "iTotalRecords" => $totalRecords,
+            "iTotalDisplayRecords" => $totalRecordswithFilter,
+            "aaData" => $data_arr
+        ];
+
+        return response()->json($response);
+    }
+
 }

@@ -155,6 +155,7 @@ class ReportController extends Controller
                 "amount_spent" => $record->amount_spent,
                 "description" => $record->description,
                 "attendees" => $record->attendees,
+                "created_at" => $record->created_at->timezone('Asia/Kolkata')->format('y-M-D h:i'),
                 "action" => $button
             ];
             $sl++;
@@ -170,5 +171,17 @@ class ReportController extends Controller
         return response()->json($response);
     }
 
+    public function delete($id)
+    {
+        $id = decrypt($id);
+
+        $delete = Expense::where('id', $id)->delete();
+
+        if (!$delete)
+            return response()->json(['message' => 'Something went wrong!'], 500);
+
+
+        return response()->json(['message' => 'Expense deleted successfully!'], 200);
+    }
 
 }

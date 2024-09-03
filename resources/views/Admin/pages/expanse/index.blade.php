@@ -131,8 +131,44 @@
             </div>
         </div>
 
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h4 class="card-title">Most Recently Added Expense Details</h4>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table id="datatable" class="table table-bordered table table-light table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Sl</th>
+                                        <th>Payment Method</th>
+                                        <th>Merchant Name</th>
+                                        <th>Date Of Spend</th>
+                                        <!-- <th>Currency</th> -->
+                                        <th>Expense Category</th>
+                                        <th class="bg-danger text-white">Amount Spent</th>
+                                        <!-- <th>Note</th> -->
+                                        <!-- <th>Attendees</th> -->
+                                        <!-- <th>Action</th> -->
+                                    </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+
+
 @endsection
 
 @section('modal')
@@ -169,6 +205,7 @@
 
                 if (xhr.status == 201) {
                     $("#save")[0].reset();
+                    $("#datatable").DataTable().ajax.reload();
                     toastr(response.message, "bg-success");
                 }
                 if (xhr.status == 200) {
@@ -189,6 +226,42 @@
                     toastr(error.responseJSON.message, "bg-danger");
                 }
             });
+        });
+
+
+        $("#datatable").DataTable({
+            responsive: true,
+            language: {
+                searchPlaceholder: "",
+            },
+            ordering: false,
+            processing: false,
+            serverSide: true,
+            serverMethod: "POST",
+            ajax: {
+                url: "{{ route('admin.table.datatable') }}",
+                beforeSend: () => {
+                    // Here, manually add the loading message.
+                    $("#banks_datatable > tbody").html(
+                        '<tr class="odd">' +
+                        '<td valign="top" colspan="7" class="dataTables_empty">Loading&hellip;</td>' +
+                        "</tr>"
+                    );
+                },
+            },
+            columns: [{
+                data: "sl",
+            }, {
+                data: "payment_method_id",
+            }, {
+                data: "merchant_name",
+            }, {
+                data: "date_of_spend",
+            }, {
+                data: "expense_category_id",
+            }, {
+                data: "amount_spent",
+            }],
         });
     </script>
 @endpush

@@ -57,7 +57,7 @@
                                         <th>Expense Category</th>
                                         <th class="bg-danger text-white">Amount Spent</th>
                                         <!-- <th>Note</th> -->
-                                        <!-- <th>Attendees</th> -->
+                                        <th>Created At</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -131,6 +131,8 @@
                         data: "expense_category_id",
                     }, {
                         data: "amount_spent",
+                    },{
+                        data: "created_at",
                     }, {
                         data: "action",
                     }],
