@@ -35,7 +35,7 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link @if (Route::currentRouteName() == 'dashboard') active @endif" href="{{ route('dashboard') }}">
+                    <a class="nav-link menu-link @if (Route::currentRouteName() == 'admin.dashboard') active @endif" href="{{ route('admin.dashboard') }}">
                         <i class="ri-funds-box-fill"></i> <span>Dashboard</span>
                     </a>
                 </li>

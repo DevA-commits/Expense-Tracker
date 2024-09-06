@@ -1,5 +1,5 @@
-<div class="offcanvas-header bg-danger text-white">
-    <h5 id="offcanvasRightLabel">Edit Faq</h5>
+<div class="offcanvas-header bg-danger">
+    <h5 id="offcanvasRightLabel" class="text-light">Edit Expense</h5>
     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
 </div>
 <div class="offcanvas-body">

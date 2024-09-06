@@ -9,19 +9,22 @@ use App\Models\ExpenseCategory;
 use App\Models\PaymentMethod;
 use App\Models\TotalAmount;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ReportController extends Controller
 {
     public function index()
     {
-        $totalAmount = TotalAmount::select('amount')->first();
+        $userId = Auth::id();
+
+        $totalAmount = TotalAmount::where('user_id', $userId)->select('amount')->first();
 
         if (!$totalAmount) {
             return redirect()->back()->with('error', 'Total amount not found.');
         }
 
-        $totalSpent = Expense::sum('amount_spent');
+        $totalSpent = Expense::where('user_id', $userId)->sum('amount_spent');
 
         $updatedAmount = $totalAmount->amount - $totalSpent;
 
@@ -105,6 +108,7 @@ class ReportController extends Controller
     {
         $ajaxData = dataTableRequests($request->all());
 
+        $userId = Auth::id();
         // Default to the current month if no month is provided
         $month = $request->get('month', date('Y-m'));
         $startOfMonth = $month . '-01';
@@ -112,6 +116,7 @@ class ReportController extends Controller
 
         // Total records
         $query = Expense::with('paymentMethod', 'currency', 'expenseCategory')
+            ->where('user_id', $userId)
             ->whereBetween('date_of_spend', [$startOfMonth, $endOfMonth]);
 
         $totalRecords = $query->count();

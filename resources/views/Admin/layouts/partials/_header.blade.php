@@ -70,13 +70,12 @@
                         aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
                             <img class="rounded-circle header-profile-user"
-                                src="https://ui-avatars.com/api/?background=5585EE&color=fff&name="
-                                alt="">
+                                src="https://ui-avatars.com/api/?background=5585EE&color=fff&name={{ Auth::user()->name }}"
+                                alt="{{ Auth::user()->name }}">
+
                             <span class="text-start ms-xl-2">
                                 <span
-                                    class="d-none d-xl-inline-block ms-1 fw-medium user-name-text"></span>
-                                <span class="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">super
-                                    admin</span>
+                                    class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ Auth::user()->name }}</span>
                             </span>
                         </span>
                     </button>
@@ -85,18 +84,20 @@
                         <a class="dropdown-item" href=""><i
                                 class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Profile</span></a>
-                        
-                        
+
+
                         <div class="dropdown-divider"></div>
-                        
+
                         <a class="dropdown-item" href="#"><i
                                 class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
                                 class="align-middle">Settings</span></a>
-                        
-                        <a class="dropdown-item" href=""><i
-                                class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle" data-key="t-logout">Logout</span></a>
-                        <form id="logout-form" action="#" method="POST" class="d-none">
+
+                        <a class="dropdown-item" href="#"
+                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
+                            <span class="align-middle" data-key="t-logout">Logout</span>
+                        </a>
+                        <form id="logout-form" action="{{ route('admin.logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
                     </div>

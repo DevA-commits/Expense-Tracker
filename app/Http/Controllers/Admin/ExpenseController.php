@@ -9,6 +9,7 @@ use App\Models\Expense;
 use App\Models\ExpenseCategory;
 use App\Models\PaymentMethod;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ExpenseController extends Controller
@@ -43,6 +44,7 @@ class ExpenseController extends Controller
         }
 
         $data = [
+            'user_id' => Auth::id(),
             'payment_method_id' => $request->payment_method,
             'merchant_name' => $request->merchant_name,
             'date_of_spend' => $request->date_of_spend,
@@ -66,13 +68,18 @@ class ExpenseController extends Controller
     {
         $ajaxData = dataTableRequests($request->all());
 
+        // Get the authenticated user's ID
+        $userId = Auth::id();
+
         // Total records
-        $query = Expense::with('paymentMethod', 'currency', 'expenseCategory');
+        $query = Expense::with('paymentMethod', 'currency', 'expenseCategory')
+            ->where('user_id', $userId);  // Filter by authenticated user
+
         $totalRecords = $query->count();
 
         // Search filter
         if (!empty($ajaxData['searchValue'])) {
-            $query->where('name', 'like', '%' . $ajaxData['searchValue'] . '%');
+            $query->where('merchant_name', 'like', '%' . $ajaxData['searchValue'] . '%');
         }
         $totalRecordswithFilter = $query->count();
 
@@ -107,5 +114,6 @@ class ExpenseController extends Controller
 
         return response()->json($response);
     }
+
 
 }
