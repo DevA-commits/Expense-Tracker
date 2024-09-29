@@ -20,7 +20,8 @@
                 <img src="{{ url('assets/images/MyEXP.png') }}" alt="" height=110" width="130" class="mt-2">
             </span>
         </a>
-        <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover" id="vertical-hover">
+        <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
+            id="vertical-hover">
             <i class="ri-record-circle-line"></i>
         </button>
     </div>
@@ -35,7 +36,8 @@
 
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link @if (Route::currentRouteName() == 'admin.dashboard') active @endif" href="{{ route('admin.dashboard') }}">
+                    <a class="nav-link menu-link @if (Route::currentRouteName() == 'admin.dashboard') active @endif"
+                        href="{{ route('admin.dashboard') }}">
                         <i class="ri-funds-box-fill"></i> <span>Dashboard</span>
                     </a>
                 </li>
@@ -43,19 +45,45 @@
                 <li class="menu-title"><span>Master</span></li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link @if (Route::currentRouteName() == 'admin.index') active @endif" href="{{ route('admin.index') }}">
+                    <a class="nav-link menu-link @if (Route::currentRouteName() == 'admin.index') active @endif"
+                        href="{{ route('admin.index') }}">
                         <i class="ri-bar-chart-box-fill"></i> <span>Expense</span>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a class="nav-link menu-link @if (Route::currentRouteName() == 'admin.report') active @endif" href="{{ route('admin.report') }}">
+                    <a class="nav-link menu-link @if (Route::currentRouteName() == 'admin.report') active @endif"
+                        href="{{ route('admin.report') }}">
                         <i class="ri-file-list-2-fill"></i> <span>Report</span>
                     </a>
                 </li>
 
+                <li class="menu-title"><span>Banks / Payments</span></li>
 
-                <!-- <li class="menu-title"><span>Setting</span></li> -->
+                <li class="nav-item">
+                    <a class="nav-link menu-link @if (Route::currentRouteName() == 'user.payment.index') active @endif"
+                        href="{{ route('user.payment.index') }}">
+                        <i class="ri-money-dollar-box-fill"></i> <span>Payments</span>
+                    </a>
+                </li>
+
+                <li class="menu-title"><span>Setting</span></li>
+
+                <li class="nav-item">
+                    <a class="nav-link menu-link @if (Route::currentRouteName() == 'user.setting') active @endif"
+                        href="{{ route('user.setting') }}">
+                        <i class="ri-settings-5-fill"></i> <span>User Setting</span>
+                    </a>
+                </li>
+
+                @if (auth()->user() && auth()->user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link menu-link @if (Route::currentRouteName() == 'index.index') active @endif"
+                            href="{{ route('index.index') }}">
+                            <i class="ri-login-circle-fill"></i> <span>Add User</span>
+                        </a>
+                    </li>
+                @endif
 
             </ul>
 

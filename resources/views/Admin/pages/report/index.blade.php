@@ -29,11 +29,35 @@
                         </div>
                     </div>
                     <div class="p-2">
-                        <div class="card-header bg-warning fw-bold p-1 px-4 text-dark">
+                        <div class="card-header bg-warning fw-bold p-1 px-3 text-dark">
                             Expense Amount -
                             {{ $totalSpent == floor($totalSpent) ? number_format($totalSpent, 0) : number_format($totalSpent, 2) }}
                         </div>
                     </div>
+                    <form class="d-flex" id="downloadForm" action="{{ route('admin.download.report') }}" method="POST">
+                        @csrf <!-- Include CSRF token for security -->
+                        <div class="p-2">
+                            <div class="card-header bg-light fw-bold p-1 px-2 text-dark">
+                                From Date -
+                                <input class="border-0 bg-light" type="date" name="from_date" id="from_date">
+                            </div>
+                        </div>
+                        <div class="p-2">
+                            <div class="card-header bg-light fw-bold p-1 px-2 text-dark">
+                                To Date -
+                                <input class="border-0 bg-light" type="date" name="to_date" id="to_date">
+                            </div>
+                        </div>
+                        <div class="p-2">
+                            <div class="card-header bg-light fw-bold p-1 px-3 text-dark">
+                                <select class="border-0 bg-light" name="pdfexel" id="pdfexel" disabled>
+                                    <option value="">--Download Option--</option>
+                                    <option value="pdf">PDF</option>
+                                    <option value="excel" disabled>Excel</option>
+                                </select>
+                            </div>
+                        </div>
+                    </form>
                 </div>
             </div>
             <div class="col-xl-12">
@@ -111,7 +135,6 @@
                             month: month // Pass the selected month
                         },
                         beforeSend: () => {
-                            // Here, manually add the loading message.
                             $("#datatable > tbody").html(
                                 '<tr class="odd">' +
                                 '<td valign="top" colspan="7" class="dataTables_empty">Loading&hellip;</td>' +
@@ -131,7 +154,7 @@
                         data: "expense_category_id",
                     }, {
                         data: "amount_spent",
-                    },{
+                    }, {
                         data: "created_at",
                     }, {
                         data: "action",
@@ -139,12 +162,42 @@
                 });
             }
 
-            // Initialize the DataTable with the current month
             loadDataTable(monthPicker.value);
 
-            // Reload the DataTable when the month changes
             monthPicker.addEventListener('change', function () {
                 loadDataTable(this.value);
+            });
+        });
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const fromDate = document.getElementById('from_date');
+            const toDate = document.getElementById('to_date');
+            const downloadOption = document.getElementById('pdfexel');
+
+            function toggleDownloadOption() {
+                if (fromDate.value && toDate.value) {
+                    downloadOption.disabled = false;
+                } else {
+                    downloadOption.disabled = true;
+                }
+            }
+
+            fromDate.addEventListener('change', toggleDownloadOption);
+            toDate.addEventListener('change', toggleDownloadOption);
+
+            document.getElementById('pdfexel').addEventListener('change', function () {
+                const downloadForm = document.getElementById('downloadForm');
+                const fromDate = document.getElementById('from_date');
+                const toDate = document.getElementById('to_date');
+                const downloadOption = document.getElementById('pdfexel');
+
+                if (this.value === 'pdf' || this.value === 'excel') {
+                    downloadForm.submit();
+                    fromDate.value = '';
+                    toDate.value = '';
+                    downloadOption.disabled = true;
+                    this.value = '';
+                }
             });
         });
 

@@ -38,7 +38,8 @@
                                         <select name="payment_method" id="payment_method" class="form-control">
                                             <option value="">--Select Option--</option>
                                             @foreach ($paymentMethods as $paymentMethod)
-                                                <option value="{{ $paymentMethod->id }}">{{ $paymentMethod->title }}
+                                                <option value="{{ $paymentMethod->id }}">
+                                                    {{ ucwords(str_replace('_', ' ', $paymentMethod->title)) }} - ({{ $paymentMethod->payment_name}})
                                                 </option>
                                             @endforeach
                                         </select>

@@ -8,8 +8,10 @@ use App\Models\Expense;
 use App\Models\ExpenseCategory;
 use App\Models\PaymentMethod;
 use App\Models\TotalAmount;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use PDF;
 use Illuminate\Support\Facades\Validator;
 
 class ReportController extends Controller
@@ -37,6 +39,30 @@ class ReportController extends Controller
         ]);
     }
 
+    public function downloadPdf(Request $request)
+    {
+        // Validate input dates
+        $request->validate([
+        ]);
+
+        $fromDate = Carbon::parse($request->input('from_date'));
+        $toDate = Carbon::parse($request->input('to_date'));
+
+        // Fetch expenses within the date range
+        $expenses = Expense::whereBetween('date_of_spend', [$fromDate, $toDate])->orderBy('date_of_spend', 'ASC')->get();
+
+        // Check if any data is found
+        if ($expenses->isEmpty()) {
+            return response()->json(['No data found for the given date range.'], 404);
+        }
+
+        // Generate PDF
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('Admin.pages.report.download_report.pdf', compact('expenses', 'fromDate', 'toDate'));
+
+        // Return PDF download
+        return $pdf->download('expense_report_' . $fromDate->format('Y_m_d') . '_to_' . $toDate->format('Y_m_d') . '.pdf');
+    }
+
     public function list($id)
     {
         $list = Expense::where('id', decrypt($id))->first();
@@ -46,7 +72,10 @@ class ReportController extends Controller
     public function edit($id)
     {
         $expense = Expense::where('id', decrypt($id))->first();
-        $paymentMethods = PaymentMethod::all();
+        
+        $userId = auth()->id();
+
+        $paymentMethods = PaymentMethod::where('user_id', $userId)->get();
         $currencies = Currency::all();
         $expenseCategories = ExpenseCategory::all();
 
@@ -150,9 +179,11 @@ class ReportController extends Controller
             $button .= '<a href="javascript:void(0);" class="link-danger mx-2 mt-2 fs-14" onclick="right_canvas(\'' . route('admin.edit', encrypt($record->id)) . '\')"><i class="ri-edit-2-line"></i></a>';
             $button .= '<a href="javascript:void(0);" class="link-danger mx-2 mt-2 fs-14" onclick="cofirm_modal(\'' . route('admin.delete', encrypt($record->id)) . '\', \'' . "datatable" . '\')"><i class="ri-delete-bin-2-line"></i></a>';
 
+            $formattedPaymentName = ucwords(str_replace('_', ' ', $record->paymentMethod->title));
+
             $data_arr[] = [
                 "sl" => $sl,
-                "payment_method_id" => $record->paymentMethod->title,
+                "payment_method_id" => $formattedPaymentName,
                 "currency_id" => $record->currency->title,
                 "expense_category_id" => $record->expenseCategory->title,
                 "merchant_name" => $record->merchant_name,

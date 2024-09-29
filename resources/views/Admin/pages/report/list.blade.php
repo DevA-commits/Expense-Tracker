@@ -13,10 +13,12 @@
         <div class="receipt-body">
             <p><strong>Merchant:</strong> {{ $list->merchant_name }}</p>
             <p><strong>Date of Spend:</strong> {{ \Carbon\Carbon::parse($list->date_of_spend)->format('d M Y') }}</p>
-            <p><strong>Payment Method:</strong> {{ $list->paymentMethod->title }}</p>
+            <p><strong>Payment Method:</strong> {{ ucwords(str_replace('_', ' ', $list->paymentMethod->title)) }} - {{ $list->paymentMethod->payment_name }}</p>
             <p><strong>Currency:</strong> {{ $list->currency->title }}</p>
             <p><strong>Expense Category:</strong> {{ $list->expenseCategory->title }}</p>
-            <p><strong>Amount Spent:</strong> {{ $list->amount_spent == floor($list->amount_spent) ? number_format($list->amount_spent, 0) : number_format($list->amount_spent, 2) }}</p>
+            <p><strong>Amount Spent:</strong>
+                {{ $list->amount_spent == floor($list->amount_spent) ? number_format($list->amount_spent, 0) : number_format($list->amount_spent, 2) }}
+            </p>
             <p><strong>Description:</strong> {{ $list->description }}</p>
             <p><strong>Attendees:</strong> {{ $list->attendees }}</p>
         </div>
@@ -31,19 +33,24 @@
     .receipt {
         font-family: Arial, sans-serif;
     }
-    .receipt-header, .receipt-footer {
+
+    .receipt-header,
+    .receipt-footer {
         border-bottom: 1px solid #ccc;
         padding-bottom: 10px;
         margin-bottom: 10px;
     }
+
     .receipt-footer {
         border-top: 1px solid #ccc;
         padding-top: 10px;
     }
+
     .receipt-body p {
         margin: 0;
         padding: 5px 0;
     }
+
     .receipt-body p strong {
         width: 150px;
         display: inline-block;

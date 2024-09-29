@@ -20,7 +20,7 @@
             <select name="payment_method_id" id="edit_payment_method_id" class="form-control">
                 @foreach($paymentMethods as $method)
                     <option value="{{ $method->id }}" {{ $method->id == $expense->payment_method_id ? 'selected' : '' }}>
-                        {{ $method->title }}
+                        {{ ucwords(str_replace('_', ' ', $method->title)) }}
                     </option>
                 @endforeach
             </select>
@@ -67,8 +67,8 @@
 
         <div class="form-group mb-3">
             <label for="attendees" class="required">Attendees</label>
-            <input type="text" name="attendees" maxlength="50" id="edit_attendees"
-                value="{{ $expense->attendees }}" class="form-control" placeholder="Enter attendees">
+            <input type="text" name="attendees" maxlength="50" id="edit_attendees" value="{{ $expense->attendees }}"
+                class="form-control" placeholder="Enter attendees">
             <span class="invalid-feedback" id="edit_attendees_error"></span>
         </div>
 

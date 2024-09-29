@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Currency;
-use App\Models\Expence;
 use App\Models\Expense;
 use App\Models\ExpenseCategory;
 use App\Models\PaymentMethod;
@@ -16,7 +15,9 @@ class ExpenseController extends Controller
 {
     public function index()
     {
-        $paymentMethods = PaymentMethod::get();
+        $userId = auth()->id();
+
+        $paymentMethods = PaymentMethod::where('user_id', $userId)->get();
         $currencies = Currency::get();
         $expensecategories = ExpenseCategory::get();
 

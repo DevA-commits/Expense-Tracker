@@ -12,7 +12,7 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ url('assets/images/logo-sm.png') }}">
+    <link rel="shortcut icon" href="{{ url('assets/images/MyEXP.png') }}">
 
     <!--Swiper slider css-->
     <link href="{{ url('assets/libs/swiper/swiper-bundle.min.css') }}" rel="stylesheet" type="text/css" />
@@ -51,10 +51,10 @@
             left: calc(47% - 20px);
             border: 6px solid #ffffff;
             /* border-color: #e84545 transparent #e84545 transparent; */
-            background-image: url('assets/images/loader.gif');
+            background-image: url('assets/images/money.gif');
             background-repeat: no-repeat;
-            width: 400px;
-            height: 400px;
+            width: 300px;
+            height: 300px;
         }
 
         @keyframes animate-preloaders {

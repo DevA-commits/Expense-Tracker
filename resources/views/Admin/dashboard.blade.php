@@ -19,6 +19,22 @@
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">Simple Pie Chart</h4>
+                    </div><!-- end card header -->
+
+                    <div class="card-body">
+                        <div id="simple_pie_chart"
+                            data-colors='["--vz-primary", "--vz-success", "--vz-warning", "--vz-danger", "--vz-info"]'
+                            class="apex-charts" dir="ltr"></div>
+                    </div><!-- end card-body -->
+                </div><!-- end card -->
+            </div>
+        </div>
         <!-- end page title -->
         <div class="row mb-3 pb-1">
             <div class="col-12">
@@ -47,7 +63,8 @@
                         </div>
                         <div class="d-flex align-items-end justify-content-between mt-4">
                             <div>
-                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="10000">0</span></h4>
+                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                        data-target="10000">0</span></h4>
                                 <a href="#" class="text-decoration-underline">See customers</a>
                             </div>
                             <div class="avatar-sm flex-shrink-0">
@@ -71,7 +88,8 @@
                         </div>
                         <div class="d-flex align-items-end justify-content-between mt-4">
                             <div>
-                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="">0</span></h4>
+                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                        data-target="">0</span></h4>
                                 <a href="#" class="text-decoration-underline">See purchase</a>
                             </div>
                             <div class="avatar-sm flex-shrink-0">
@@ -95,7 +113,8 @@
                         </div>
                         <div class="d-flex align-items-end justify-content-between mt-4">
                             <div>
-                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="">0</span></h4>
+                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                        data-target="">0</span></h4>
                                 <a href="#" class="text-decoration-underline">See wallet</a>
                             </div>
                             <div class="avatar-sm flex-shrink-0">
@@ -119,7 +138,8 @@
                         </div>
                         <div class="d-flex align-items-end justify-content-between mt-4">
                             <div>
-                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="">0</span></h4>
+                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                        data-target="">0</span></h4>
                                 <a href="#" class="text-decoration-underline">See withdraw</a>
                             </div>
                             <div class="avatar-sm flex-shrink-0">
@@ -142,12 +162,14 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1 overflow-hidden">
-                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Total Task Earnings</p>
+                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Total Task Earnings
+                                </p>
                             </div>
                         </div>
                         <div class="d-flex align-items-end justify-content-between mt-4">
                             <div>
-                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="">0</span></h4>
+                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                        data-target="">0</span></h4>
                                 <a href="#" class="text-decoration-underline">See task earnings</a>
                             </div>
                             <div class="avatar-sm flex-shrink-0">
@@ -166,12 +188,14 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <div class="flex-grow-1 overflow-hidden">
-                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Total Referral Earnings</p>
+                                <p class="text-uppercase fw-medium text-muted text-truncate mb-0">Total Referral
+                                    Earnings</p>
                             </div>
                         </div>
                         <div class="d-flex align-items-end justify-content-between mt-4">
                             <div>
-                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value" data-target="">0</span></h4>
+                                <h4 class="fs-22 fw-semibold ff-secondary mb-4"><span class="counter-value"
+                                        data-target="">0</span></h4>
                                 <a href="#" class="text-decoration-underline">See referral earnings</a>
                             </div>
                             <div class="avatar-sm flex-shrink-0">
